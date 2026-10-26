@@ -34,7 +34,7 @@ export const businessConfig = {
     }
   ],
   contact: {
-    phone: "050-4646498",
+    phone: "050-0000000",
     email: "info@purebeauty.co.il",
     address: "רחוב הרצל 15, תל אביב",
     formspreeId: "YOUR_FORMSPREE_ID_HERE" // כאן המפתח של טופס המייל שלהם
