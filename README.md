@@ -1,4 +1,4 @@
-# 💄 PureBeauty — Beauty Salon & Medical Cosmetics Landing Page
+# PureBeauty — Beauty Salon & Medical Cosmetics Landing Page
 
 A modern, responsive Single Page Application (SPA) with a built-in Content Management System (CMS), built with **React**, **Vite**, and **Google Firebase**.
 
