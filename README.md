@@ -15,6 +15,16 @@ Designed as both a professional portfolio project and a customizable commercial 
 | Landing page | [`/`](https://beauty-salon-demo-website-ten.vercel.app) |
 | Admin dashboard | [`/?admin=true`](https://beauty-salon-demo-website-ten.vercel.app/?admin=true) |
 
+### 🔑 Demo Admin Access
+
+To explore the admin dashboard, sign in at [`/?admin=true`](https://beauty-salon-demo-website-ten.vercel.app/?admin=true) with:
+
+| Email | Password |
+| --- | --- |
+| `demo@purebeauty.com` | `Demo1234!` |
+
+> This is a public demo account — data may be reset periodically.
+
 ---
 
 ## Key Features

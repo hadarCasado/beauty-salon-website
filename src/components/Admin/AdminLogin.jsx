@@ -1,6 +1,22 @@
 import React, { useState } from 'react';
 import { getAuth, signInWithEmailAndPassword, sendPasswordResetEmail } from 'firebase/auth';
 
+const EyeIcon = () => (
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+        <path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12z" />
+        <circle cx="12" cy="12" r="3" />
+    </svg>
+);
+
+const EyeOffIcon = () => (
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+        <path d="M10.6 5.1A10.4 10.4 0 0 1 12 5c6.5 0 10 7 10 7a17.6 17.6 0 0 1-2.4 3.4" />
+        <path d="M6.6 6.6C3.6 8.5 2 12 2 12s3.5 7 10 7a9.7 9.7 0 0 0 5.4-1.6" />
+        <path d="M9.9 9.9a3 3 0 0 0 4.2 4.2" />
+        <line x1="2" y1="2" x2="22" y2="22" />
+    </svg>
+);
+
 export default function AdminLogin({ onLoginSuccess }) {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
@@ -8,6 +24,7 @@ export default function AdminLogin({ onLoginSuccess }) {
     const [loading, setLoading] = useState(false);
     const [isForgotPassword, setIsForgotPassword] = useState(false);
     const [resetMessage, setResetMessage] = useState('');
+    const [showPassword, setShowPassword] = useState(false);
 
     const auth = getAuth();
 
@@ -84,6 +101,33 @@ export default function AdminLogin({ onLoginSuccess }) {
                 .link-btn:hover {
                     color: #2b6cb0;
                 }
+                    .password-toggle {
+                    position: absolute;
+                    left: 10px;
+                    top: 50%;
+                    transform: translateY(-50%);
+                    background: none;
+                    border: none;
+                    padding: 4px;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    color: #a0aec0;
+                    cursor: pointer;
+                    border-radius: 4px;
+                    transition: color 0.2s ease;
+                }
+                .password-toggle:hover {
+                    color: #4a5568;
+                }
+                .password-toggle:focus-visible {
+                    outline: 2px solid #3182ce;
+                    outline-offset: 1px;
+                }
+                .password-toggle:disabled {
+                    cursor: not-allowed;
+                    opacity: 0.5;
+                }
             `}</style>
 
             <form onSubmit={isForgotPassword ? handleForgotPassword : handleLogin} className="login-card">
@@ -124,14 +168,28 @@ export default function AdminLogin({ onLoginSuccess }) {
                 {!isForgotPassword && (
                     <div style={{ marginBottom: '10px' }}>
                         <label style={{ display: 'block', marginBottom: '6px', fontWeight: 'bold', color: '#4a5568', fontSize: '0.95rem' }}>סיסמה:</label>
-                        <input 
-                            type="password" 
-                            value={password} 
-                            onChange={(e) => setPassword(e.target.value)} 
-                            required 
-                            disabled={loading}
-                            style={{ width: '100%', padding: '12px', borderRadius: '6px', border: '1px solid #e2e8f0', boxSizing: 'border-box', fontSize: '1rem' }} 
-                        />
+                        <div style={{ position: 'relative' }}>
+                            <input 
+                                type={showPassword ? 'text' : 'password'} 
+                                value={password} 
+                                onChange={(e) => setPassword(e.target.value)} 
+                                required 
+                                disabled={loading}
+                                autoComplete="current-password"
+                                style={{ width: '100%', padding: '12px', paddingLeft: '44px', borderRadius: '6px', border: '1px solid #e2e8f0', boxSizing: 'border-box', fontSize: '1rem' }} 
+                            />
+                            {/* כפתור עין להצגה / הסתרה של הסיסמה */}
+                            <button
+                                type="button"
+                                className="password-toggle"
+                                onClick={() => setShowPassword(!showPassword)}
+                                disabled={loading}
+                                aria-label={showPassword ? 'הסתר סיסמה' : 'הצג סיסמה'}
+                                title={showPassword ? 'הסתר סיסמה' : 'הצג סיסמה'}
+                            >
+                                {showPassword ? <EyeOffIcon /> : <EyeIcon />}
+                            </button>
+                        </div>
                     </div>
                 )}
                 
@@ -144,6 +202,7 @@ export default function AdminLogin({ onLoginSuccess }) {
                             setIsForgotPassword(!isForgotPassword);
                             setLoginError('');
                             setResetMessage('');
+                            setShowPassword(false);
                         }}
                     >
                         {isForgotPassword ? 'חזרה למסך התחברות' : 'שכחתי סיסמה'}
